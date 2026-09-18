@@ -1,0 +1,25 @@
+key = ['SEXO', 'ALIENTO', 'CINTURON']
+null_key = ['Se fugó', 'Se ignora', 'Se ignora']
+with plt.style.context('bmh'):
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+
+    for i in range(3):
+        faltantes = len(data_df[data_df[key[i]] == null_key[i]])
+        completos = len(data_df[data_df[key[i]] != null_key[i]])
+        total = completos + faltantes
+
+        wedges, texts, autotexts = axes[i].pie(
+            [completos, faltantes],
+            autopct=lambda pct, total=total: f'{pct:.1f}%\n({int(round(pct/100*total))})',
+            colors=['#348ABD', '#D55E00'],
+            startangle=90
+        )
+        axes[i].set_title(f'Completitud | {key[i]}', fontweight='bold')
+
+    fig.legend(
+        wedges, ['Completos', 'Faltantes'],
+        loc='lower center', ncol=2, bbox_to_anchor=(0.5, -0.02)
+    )
+
+        
+    plt.show()
